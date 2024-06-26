@@ -11,7 +11,7 @@ class Subcategory {
 
   factory Subcategory.fromJson(Map<String, dynamic> json) {
     return Subcategory(
-      id: json['Id'],
+      id: int.tryParse(json['Id'].toString()) ?? 0,
       name: json['Name'],
       imgUrlPath: json['ImgUrlPath'],
     );

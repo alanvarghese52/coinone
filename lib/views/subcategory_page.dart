@@ -1,14 +1,12 @@
-// views/subcategory_page.dart
-
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import '../models/sub_category.dart'; // Ensure correct import path for Subcategory model
+import '../models/sub_category.dart';
 
 class SubcategoryPage extends StatefulWidget {
   final int categoryId;
 
-  const SubcategoryPage({Key? key, required this.categoryId}) : super(key: key);
+  const SubcategoryPage({super.key, required this.categoryId});
 
   @override
   _SubcategoryPageState createState() => _SubcategoryPageState();
@@ -24,21 +22,24 @@ class _SubcategoryPageState extends State<SubcategoryPage> {
   }
 
   Future<List<Subcategory>> fetchSubcategories(int categoryId) async {
-    final url = 'https://coinoneglobal.in/teresa_trial/webtemplate.asmx/FnGetTemplateSubCategoryList?PrmCmpId=1&PrmBrId=2&PrmCategoryId=$categoryId';
+    final url =
+        'https://coinoneglobal.in/teresa_trial/webtemplate.asmx/FnGetTemplateSubCategoryList?PrmCmpId=1&PrmBrId=2&PrmCategoryId=$categoryId';
 
     final response = await http.get(Uri.parse(url));
 
     if (response.statusCode == 200) {
-      final List<dynamic> decodedResponse = json.decode(response.body)['d'];
-      print('API response: $decodedResponse'); // Log the raw response
-
-      return decodedResponse.map((json) => Subcategory.fromJson(json)).toList();
+      final List<dynamic> decodedResponse = json.decode(response.body);
+      if (decodedResponse is List) {
+        return decodedResponse
+            .map((json) => Subcategory.fromJson(json))
+            .toList();
+      } else {
+        throw Exception('Unexpected JSON structure: $decodedResponse');
+      }
     } else {
-      print('Failed to load subcategories: ${response.statusCode}');
       throw Exception('Failed to load subcategories');
     }
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,7 +52,6 @@ class _SubcategoryPageState extends State<SubcategoryPage> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
-            print('Error: ${snapshot.error}'); // Log the error
             return const Center(child: Text('Failed to load subcategories'));
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
             return const Center(child: Text('No subcategories available'));
@@ -67,7 +67,8 @@ class _SubcategoryPageState extends State<SubcategoryPage> {
               itemCount: subcategories.length,
               itemBuilder: (context, index) {
                 final subcategory = subcategories[index];
-                final imageUrl = 'https://coinoneglobal.in/crm/${subcategory.imgUrlPath}';
+                final imageUrl =
+                    'https://coinoneglobal.in/crm/${subcategory.imgUrlPath}';
 
                 return GestureDetector(
                   onTap: () {

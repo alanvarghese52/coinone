@@ -26,11 +26,8 @@ class _CategoryPageState extends State<CategoryPage> {
   Future<List<Category>> fetchCategories() async {
     final response = await http.get(Uri.parse(
         'https://coinoneglobal.in/teresa_trial/webtemplate.asmx/FnGetTemplateCategoryList?PrmCmpId=1&PrmBrId=2'));
-
     if (response.statusCode == 200) {
       final List<dynamic> decodedResponse = json.decode(response.body);
-      print('API response: $decodedResponse'); // Log the raw response
-
       return decodedResponse.map((json) => Category.fromJson(json)).toList();
     } else {
       print('Failed to load categories: ${response.statusCode}');
@@ -62,7 +59,6 @@ class _CategoryPageState extends State<CategoryPage> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
-            print('Error: ${snapshot.error}'); // Log the error
             return const Center(child: Text('Failed to load categories'));
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
             return const Center(child: Text('No categories available'));
@@ -99,7 +95,7 @@ class _CategoryPageState extends State<CategoryPage> {
                             imageUrl,
                             fit: BoxFit.cover,
                             errorBuilder: (context, error, stackTrace) =>
-                            const Center(child: Icon(Icons.error)),
+                                const Center(child: Icon(Icons.error)),
                           ),
                         ),
                         Padding(
