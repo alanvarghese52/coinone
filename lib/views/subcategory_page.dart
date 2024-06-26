@@ -40,11 +40,16 @@ class _SubcategoryPageState extends State<SubcategoryPage> {
       throw Exception('Failed to load subcategories');
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Subcategories for Category ${widget.categoryId}'),
+      backgroundColor: Colors.grey[300],
+      appBar: AppBar(centerTitle: true,
+        title: const Text(
+          'Subcategories',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
       ),
       body: FutureBuilder<List<Subcategory>>(
         future: _subcategoriesFuture,
@@ -69,10 +74,9 @@ class _SubcategoryPageState extends State<SubcategoryPage> {
                 final subcategory = subcategories[index];
                 final imageUrl =
                     'https://coinoneglobal.in/crm/${subcategory.imgUrlPath}';
-
                 return GestureDetector(
                   onTap: () {
-                    // Handle onTap action for subcategory item if needed
+
                   },
                   child: Card(
                     child: Column(

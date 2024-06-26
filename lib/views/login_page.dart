@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../services/auth_service.dart';
+import '../widgets/my_text_field.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -58,28 +59,20 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               const SizedBox(height: 30),
-              TextField(
+
+              CustomTextField(
                 controller: _emailController,
-                decoration: InputDecoration(
-                  labelText: 'Email',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  prefixIcon: const Icon(Icons.email),
-                ),
+                labelText: 'Email',
+                icon: Icons.email,
               ),
               const SizedBox(height: 20),
-              TextField(
+              CustomTextField(
                 controller: _passwordController,
-                decoration: InputDecoration(
-                  labelText: 'Password',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  prefixIcon: const Icon(Icons.lock),
-                ),
+                labelText: 'Password',
+                icon: Icons.lock,
                 obscureText: true,
               ),
+
               const SizedBox(height: 10),
               // Keep me logged in Checkbox
               CheckboxListTile(

@@ -39,8 +39,8 @@ class _CategoryPageState extends State<CategoryPage> {
   Widget build(BuildContext context) {
     final authService = Provider.of<AuthService>(context);
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Coinone-shopping'),
+      backgroundColor: Colors.grey[300],
+      appBar: AppBar(centerTitle: true,
         actions: [
           IconButton(
             icon: const Icon(Icons.logout),
@@ -52,6 +52,12 @@ class _CategoryPageState extends State<CategoryPage> {
             },
           ),
         ],
+        title: Text(
+                  'Style with CoinOne',
+                  style: TextStyle(color: Colors.black87,
+                      fontWeight: FontWeight.bold,fontSize: 25),
+                ),
+
       ),
       body: FutureBuilder<List<Category>>(
         future: _categoriesFuture,

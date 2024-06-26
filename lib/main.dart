@@ -58,7 +58,7 @@ class MyApp extends StatelessWidget {
           '/login': (_) => const LoginPage(),
           '/register': (_) => const RegisterPage(),
           '/category': (_) => const CategoryPage(),
-          '/subcategory': (context) => const SubcategoryPage(categoryId: 1),
+          '/subcategory': (_) => const SubcategoryPage(categoryId: 1),
         },
       ),
     );
