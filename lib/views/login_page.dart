@@ -39,10 +39,8 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // App Logo
               Image.asset('assets/logo.jpeg', height: 150),
               const SizedBox(height: 20),
-              // Welcome Text
               const Text(
                 'Welcome Back!',
                 style: TextStyle(
@@ -60,7 +58,6 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               const SizedBox(height: 30),
-              // Email TextField
               TextField(
                 controller: _emailController,
                 decoration: InputDecoration(
@@ -72,7 +69,6 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               const SizedBox(height: 20),
-              // Password TextField
               TextField(
                 controller: _passwordController,
                 decoration: InputDecoration(
@@ -113,7 +109,7 @@ class _LoginPageState extends State<LoginPage> {
                     Navigator.pushReplacementNamed(context, '/category');
                   } catch (e) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Failed to login')),
+                      const SnackBar(content: Text('Enter your email and password correctly')),
                     );
                   }
                 },
@@ -129,7 +125,6 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               const SizedBox(height: 20),
-              // Register Redirect
               TextButton(
                 onPressed: () {
                   Navigator.pushNamed(context, '/register');

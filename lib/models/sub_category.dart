@@ -6,7 +6,7 @@ class Subcategory {
   Subcategory({
     required this.id,
     required this.name,
-    required this.imgUrlPath
+    required this.imgUrlPath,
   });
 
   factory Subcategory.fromJson(Map<String, dynamic> json) {

@@ -1,48 +1,105 @@
+// views/subcategory_page.dart
+
+import 'dart:convert';
 import 'package:flutter/material.dart';
-import '../models/sub_category.dart';
-import '../services/api_service.dart';
-import '../widgets/subcategory_card.dart';
+import 'package:http/http.dart' as http;
+import '../models/sub_category.dart'; // Ensure correct import path for Subcategory model
 
-class SubcategoryPage extends StatelessWidget {
-  final int? categoryId;
+class SubcategoryPage extends StatefulWidget {
+  final int categoryId;
 
-  SubcategoryPage({required this.categoryId});
+  const SubcategoryPage({Key? key, required this.categoryId}) : super(key: key);
+
+  @override
+  _SubcategoryPageState createState() => _SubcategoryPageState();
+}
+
+class _SubcategoryPageState extends State<SubcategoryPage> {
+  late Future<List<Subcategory>> _subcategoriesFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _subcategoriesFuture = fetchSubcategories(widget.categoryId);
+  }
+
+  Future<List<Subcategory>> fetchSubcategories(int categoryId) async {
+    final url = 'https://coinoneglobal.in/teresa_trial/webtemplate.asmx/FnGetTemplateSubCategoryList?PrmCmpId=1&PrmBrId=2&PrmCategoryId=$categoryId';
+
+    final response = await http.get(Uri.parse(url));
+
+    if (response.statusCode == 200) {
+      final List<dynamic> decodedResponse = json.decode(response.body)['d'];
+      print('API response: $decodedResponse'); // Log the raw response
+
+      return decodedResponse.map((json) => Subcategory.fromJson(json)).toList();
+    } else {
+      print('Failed to load subcategories: ${response.statusCode}');
+      throw Exception('Failed to load subcategories');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    if (categoryId == null) {
-      return Scaffold(
-        appBar: AppBar(
-          title: Text('Subcategories'),
-        ),
-        body: Center(
-          child: Text('No category selected.'),
-        ),
-      );
-    }
-
     return Scaffold(
       appBar: AppBar(
-        title: Text('Subcategories'),
+        title: Text('Subcategories for Category ${widget.categoryId}'),
       ),
       body: FutureBuilder<List<Subcategory>>(
-        future: ApiService().fetchSubcategories(categoryId!),
+        future: _subcategoriesFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
-            return Center(child: Text('Failed to load subcategories'));
+            print('Error: ${snapshot.error}'); // Log the error
+            return const Center(child: Text('Failed to load subcategories'));
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return Center(child: Text('No subcategories found'));
+            return const Center(child: Text('No subcategories available'));
           } else {
+            final subcategories = snapshot.data!;
             return GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              padding: const EdgeInsets.all(10.0),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                childAspectRatio: 0.8,
+                crossAxisSpacing: 10.0,
+                mainAxisSpacing: 10.0,
               ),
-              itemCount: snapshot.data!.length,
+              itemCount: subcategories.length,
               itemBuilder: (context, index) {
-                return SubcategoryCard(subcategory: snapshot.data![index]);
+                final subcategory = subcategories[index];
+                final imageUrl = 'https://coinoneglobal.in/crm/${subcategory.imgUrlPath}';
+
+                return GestureDetector(
+                  onTap: () {
+                    // Handle onTap action for subcategory item if needed
+                  },
+                  child: Card(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Expanded(
+                          child: Image.network(
+                            imageUrl,
+                            fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) =>
+                                const Center(child: Icon(Icons.error)),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            subcategory.name,
+                            style: const TextStyle(
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
               },
             );
           }

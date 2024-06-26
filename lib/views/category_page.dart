@@ -28,13 +28,13 @@ class _CategoryPageState extends State<CategoryPage> {
         'https://coinoneglobal.in/teresa_trial/webtemplate.asmx/FnGetTemplateCategoryList?PrmCmpId=1&PrmBrId=2'));
 
     if (response.statusCode == 200) {
-      final decodedResponse = json.decode(response.body);
+      final List<dynamic> decodedResponse = json.decode(response.body);
       print('API response: $decodedResponse'); // Log the raw response
 
-      final List<dynamic> data = decodedResponse['d']; // Adjust this based on your actual JSON structure
-      return data.map((json) => Category.fromJson(json)).toList();
+      return decodedResponse.map((json) => Category.fromJson(json)).toList();
     } else {
-      throw Exception('Failed to load categories: ${response.statusCode}');
+      print('Failed to load categories: ${response.statusCode}');
+      throw Exception('Failed to load categories');
     }
   }
 
@@ -43,7 +43,7 @@ class _CategoryPageState extends State<CategoryPage> {
     final authService = Provider.of<AuthService>(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Home'),
+        title: const Text('Coinone-shopping'),
         actions: [
           IconButton(
             icon: const Icon(Icons.logout),

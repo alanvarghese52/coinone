@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
                   if (snapshot.data ?? false) {
                     return  const CategoryPage();
                   } else {
-                    return LoginPage();
+                    return const LoginPage();
                   }
                 }
               },
@@ -55,10 +55,10 @@ class MyApp extends StatelessWidget {
           },
         ),
         routes: {
-          '/login': (_) => LoginPage(),
-          '/register': (_) => RegisterPage(),
+          '/login': (_) => const LoginPage(),
+          '/register': (_) => const RegisterPage(),
           '/category': (_) => const CategoryPage(),
-          '/subcategory': (context) => SubcategoryPage(categoryId: null),
+          '/subcategory': (context) => const SubcategoryPage(categoryId: 1),
         },
       ),
     );
