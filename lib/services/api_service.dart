@@ -8,7 +8,7 @@ class ApiService {
   static const String _baseUrl = 'https://coinoneglobal.in/crm/';
 
   Future<List<Category>> fetchCategories() async {
-    final response = await http.get(Uri.parse('${Constants.categoryUrl}'));
+    final response = await http.get(Uri.parse(Constants.categoryUrl));
     if (response.statusCode == 200) {
       List<dynamic> data = json.decode(response.body);
       return data.map((json) => Category.fromJson(json)).toList();

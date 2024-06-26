@@ -4,6 +4,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../services/auth_service.dart';
 
 class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
+
   @override
   _LoginPageState createState() => _LoginPageState();
 }
@@ -41,7 +43,7 @@ class _LoginPageState extends State<LoginPage> {
               Image.asset('assets/logo.jpeg', height: 150),
               const SizedBox(height: 20),
               // Welcome Text
-              Text(
+              const Text(
                 'Welcome Back!',
                 style: TextStyle(
                   fontSize: 28,
@@ -50,7 +52,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               const SizedBox(height: 10),
-              Text(
+              const Text(
                 'Login to continue',
                 style: TextStyle(
                   fontSize: 16,
@@ -66,7 +68,7 @@ class _LoginPageState extends State<LoginPage> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
                   ),
-                  prefixIcon: Icon(Icons.email),
+                  prefixIcon: const Icon(Icons.email),
                 ),
               ),
               const SizedBox(height: 20),
@@ -78,7 +80,7 @@ class _LoginPageState extends State<LoginPage> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
                   ),
-                  prefixIcon: Icon(Icons.lock),
+                  prefixIcon: const Icon(Icons.lock),
                 ),
                 obscureText: true,
               ),

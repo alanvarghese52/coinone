@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import '../services/auth_service.dart';
 
 class RegisterPage extends StatefulWidget {
+  const RegisterPage({super.key});
+
   @override
   _RegisterPageState createState() => _RegisterPageState();
 }
@@ -30,7 +32,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 Image.asset('assets/logo.jpeg', height: 150),
                 const SizedBox(height: 20),
                 // Welcome Text
-                Text(
+                const Text(
                   'Create Account',
                   style: TextStyle(
                     fontSize: 28,
@@ -39,7 +41,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                 ),
                 const SizedBox(height: 10),
-                Text(
+                const Text(
                   'Sign up to get started',
                   style: TextStyle(
                     fontSize: 16,
@@ -55,7 +57,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
                     ),
-                    prefixIcon: Icon(Icons.person),
+                    prefixIcon: const Icon(Icons.person),
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -73,7 +75,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
                     ),
-                    prefixIcon: Icon(Icons.email),
+                    prefixIcon: const Icon(Icons.email),
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -94,7 +96,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
                     ),
-                    prefixIcon: Icon(Icons.lock),
+                    prefixIcon: const Icon(Icons.lock),
                   ),
                   obscureText: true,
                   validator: (value) {

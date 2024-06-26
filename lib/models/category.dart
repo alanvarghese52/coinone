@@ -3,7 +3,11 @@ class Category {
   final String name;
   final String imgUrlPath;
 
-  Category({required this.id, required this.name, required this.imgUrlPath});
+  Category({
+    required this.id,
+    required this.name,
+    required this.imgUrlPath,
+  });
 
   factory Category.fromJson(Map<String, dynamic> json) {
     return Category(

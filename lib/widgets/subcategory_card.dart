@@ -5,7 +5,7 @@ import '../utils/constants.dart';
 class SubcategoryCard extends StatelessWidget {
   final Subcategory subcategory;
 
-  SubcategoryCard({required this.subcategory});
+  const SubcategoryCard({super.key, required this.subcategory});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,8 @@ class SubcategoryCard extends StatelessWidget {
           Image.network(imageUrl, fit: BoxFit.cover),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(subcategory.name, style: TextStyle(fontSize: 16)),
+            child: Text(subcategory.name,
+                style: const TextStyle(fontSize: 16)),
           ),
         ],
       ),

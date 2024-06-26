@@ -10,8 +10,16 @@ import 'views/subcategory_page.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => AuthService()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -23,7 +31,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => AuthService()),
       ],
       child: MaterialApp(
-        title: 'Flutter Demo',
+        title: 'Coin-one',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
@@ -37,7 +45,7 @@ class MyApp extends StatelessWidget {
                   return const CircularProgressIndicator();
                 } else {
                   if (snapshot.data ?? false) {
-                    return CategoryPage();
+                    return  const CategoryPage();
                   } else {
                     return LoginPage();
                   }
@@ -49,10 +57,12 @@ class MyApp extends StatelessWidget {
         routes: {
           '/login': (_) => LoginPage(),
           '/register': (_) => RegisterPage(),
-          '/category': (_) => CategoryPage(),
+          '/category': (_) => const CategoryPage(),
           '/subcategory': (context) => SubcategoryPage(categoryId: null),
         },
       ),
     );
   }
 }
+
+
